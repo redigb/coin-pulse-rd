@@ -1,12 +1,10 @@
 
 import { fetcher } from "@/lib/coingecko.actions";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DataTable from "../DataTable";
-
-
 
 
 const TrendingCoins = async () => {
@@ -36,11 +34,12 @@ const TrendingCoins = async () => {
                 const isTrendingUp = item.data.price_change_percentage_24h.usd > 0;
                 return (
                     <div className={cn('price-change', isTrendingUp ? 'text-green-500' : 'text-red-500')}>
-                        <p>
+                        <p className="flex items-center">
+                            {formatPercentage(item.data.price_change_percentage_24h.usd)}
                             {isTrendingUp ? (
                                 <TrendingUp width={16} height={16} />) :
                                 (<TrendingDown width={16} height={16} />)}
-                            {item.data.price_change_percentage_24h.usd}%
+                            
                         </p>
                     </div>
                 );
@@ -56,16 +55,14 @@ const TrendingCoins = async () => {
     return (
         <div id="trending-coins">
             <h4>Trending Coins</h4>
-            <div id="trending-coins">
-                <DataTable
-                    columns={columns}
-                    data={trendingCoins.coins.slice(0, 6) || []}
-                    rowKey={(coin) => coin.item.id}
-                    tableClassName="trending-coins-table"
-                    headerCellClassName="py-3!"
-                    bodyCellClassName="py-2!"
-                />
-            </div>
+            <DataTable
+                columns={columns}
+                data={trendingCoins.coins.slice(0, 6) || []}
+                rowKey={(coin) => coin.item.id}
+                tableClassName="trending-coins-table"
+                headerCellClassName="py-3!"
+                bodyCellClassName="py-2!"
+            />
         </div>
     );
 };

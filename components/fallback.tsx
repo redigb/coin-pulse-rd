@@ -55,4 +55,31 @@ export const TrendingCoinsFallback: React.FC<{ rows?: number }> = ({ rows = 5 })
   );
 };
 
+export const CategoriesFallback: React.FC<{ rows?: number }> = ({ rows = 6 }) => {
+  return (
+    <div id="categories-fallback">
+      <h4>Top Categories</h4>
+      <div className="mt-3">
+        {Array.from({ length: rows }).map((_, i) => (
+          <div key={i} className="grid grid-cols-3 items-center gap-4 py-3 px-5">
+            <div className="category-cell">
+              <div className="category-skeleton skeleton" />
+            </div>
+
+            <div className="top-gainers-cell flex items-center">
+              <div className="coin-skeleton skeleton" />
+              <div className="coin-skeleton skeleton ml-2" />
+              <div className="coin-skeleton skeleton ml-2" />
+            </div>
+
+            <div className="change-cell">
+              <div className="value-skeleton-sm skeleton" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default null;

@@ -1,21 +1,13 @@
 
-import DataTable from "@/components/DataTable";
 import CoinOverview from "@/components/home/CoinOverView";
 import TrendingCoins from "@/components/home/TrendingCoins";
-import { fetcher } from "@/lib/coingecko.actions";
-import { cn, formatCurrency } from "@/lib/utils";
-import { TrendingDown, TrendingUp } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { Suspense } from "react";
-import { CoinOverviewFallback, TrendingCoinsFallback } from "@/components/fallback";
-
-
+import { CoinOverviewFallback, TrendingCoinsFallback, CategoriesFallback } from "@/components/fallback";
+import Categories from "@/components/home/Categories";
 
 const Page = async () => {
 
   return <main className="main-container">
-
     <section className="home-grid">
 
       <Suspense fallback={<CoinOverviewFallback />}>
@@ -28,8 +20,9 @@ const Page = async () => {
     </section>
 
     <section className="w-full mt-7 space-y-4">
-      <p>Categories</p>
-
+      <Suspense fallback={<CategoriesFallback rows={6} />}>
+        <Categories />
+      </Suspense>
     </section>
   </main>;
 }
